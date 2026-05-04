@@ -7,6 +7,7 @@ def gerarnumero():
     numero |= (1<<1023)
     numero |= 1
     return numero 
+
 def miller_rabin(n,k=40):
     if n<2:
         return False
