@@ -1,4 +1,3 @@
-from sympy import isprime, randprime
 import math
 import random
 
@@ -75,5 +74,3 @@ def gerarchave(primeiro,segundo):
     chavepub=(e,n)
     chavepriv=(d,n)
     return  chavepub,chavepriv
-
-
