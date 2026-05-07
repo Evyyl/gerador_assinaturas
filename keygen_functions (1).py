@@ -1,3 +1,4 @@
+from sympy import isprime, randprime
 import math
 import random
 
@@ -6,7 +7,6 @@ def gerarnumero():
     numero |= (1<<1023)
     numero |= 1
     return numero 
-
 def miller_rabin(n,k=40):
     if n<2:
         return False
@@ -74,3 +74,5 @@ def gerarchave(primeiro,segundo):
     chavepub=(e,n)
     chavepriv=(d,n)
     return  chavepub,chavepriv
+
+

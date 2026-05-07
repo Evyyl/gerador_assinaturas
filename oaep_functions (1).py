@@ -16,11 +16,6 @@ def cifra_oaep(n, mensagem, hash_func=sha3_256):
     tam_msg = len(mensagem)
     tam_hash = hash_func().digest_size
 
-    limite = k - 2 * tam_hash - 2
-
-    if tam_msg > limite:
-        raise ValueError(f"Mensagem muito longa. Máximo permitido: {limite} bytes")
-
     label_hash = hash_func(b"").digest()
 
     padding_string = b"\x00" * (k - tam_msg - 2 * tam_hash - 2)
@@ -49,7 +44,7 @@ def decifra_oaep(n, msg_cifrada, hash_func=sha3_256):
     idx = data_block_sem_hash.find(b'\x01')
 
     if idx == -1:
-        raise ValueError("Formato OAEP inválido")
+        print("Formato OAEP inválido: separador 0x01 não encontrado")
 
     msg = data_block_sem_hash[idx + 1:]
 
