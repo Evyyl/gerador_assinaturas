@@ -66,20 +66,22 @@ def verificar_assinatura(arquivo, assinatura_arquivo, e, n):
         hash_recuperado = pow(assinatura_int, e, n)
 
     # For signature with hash with oaep:
-    if  with_oaep:
+    if with_oaep:
         assinatura64 = linhas[0].strip()
         print(f"\n{assinatura64 = }")
         assinatura_bytes = base64.b64decode(assinatura64)
         print(f"\n{assinatura_bytes = }")
-        hash_recovered = oaep.decifra_oaep(n, assinatura_bytes)
-        print(f"\nbinario:{hash_recovered = }")
-        assinatura_int = int.from_bytes(hash_recovered, byteorder='big')
+        assinatura_int = int.from_bytes(assinatura_bytes, byteorder='big')
         print(f"\n{assinatura_int = }")
-        hash_recuperado = pow(assinatura_int, e, n)
+        recovered_int = pow(assinatura_int, e, n)
+        recovered_bytes = recovered_int.to_bytes((n.bit_length() + 7) // 8, byteorder='big')
+        hash_recuperado_bytes = oaep.decifra_oaep(n, recovered_bytes)
+        print(f"\nbinario:{hash_recuperado_bytes = }")
+        hash_recuperado = int.from_bytes(hash_recuperado_bytes, byteorder='big')
 
     print(f"\n== Comparing file hash with its hash signature: ==")
     print(f"\n{hash_recuperado = }")
     print(f"\n{hash_atual_int = }\n")
 
-    return print(hash_recuperado == hash_atual_int)
+    return hash_recuperado == hash_atual_int
 
